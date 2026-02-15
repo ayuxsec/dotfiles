@@ -8,3 +8,11 @@ rustscan_common_ports() {
   [ "$#" -eq 0 ] && { echo "usage: rustscan_common_ports <host>"; return 1; }
   rustscan -a $1 -g -t 5000 -b 500 -p 21,22,5432,3306,25,88,389,445,636,1443,6379,27017,9200,1521
 }
+
+ipinfo() {
+  local base_url="https://ipinfo.io"
+  [ "$#" -eq 0 ] && { echo "Usage: ipinfo <ip_addr>"; return 1; }
+  [[ -v ipinfo_api_key ]] && { curl -s "$base_url/$1" -H  "Authorization: Bearer ${ipinfo_api_key}"; return 0; }
+  curl -s $base_url/$1
+}
+
