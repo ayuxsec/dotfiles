@@ -52,3 +52,18 @@ append_param() {
 }
 
 
+jsscan() {
+  [ "$#" -ne 1 ] && { echo "Usage: jsscan <url_file>"; return 1; }
+  temp_dir=$(mktemp -d)
+  # trap 'rm -rf "$tmp_dir"' EXIT
+
+  cat $1 | \
+    xargs -P 5 -I {} curl-impersonate-chrome {} -s -H "$ua_header" >> \
+    "$temp_dir"/"$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)".js
+  
+  trufflehog filesystem "$temp_dir" --results=verified
+
+  echo "[+] saved to ${temp_dir}"
+}
+
+
