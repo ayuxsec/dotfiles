@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
+
 ua_header="User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36"
 color_green="\e[32m"
 color_yellow="\e[33m"
 color_normal="\e[0m"
+common_ports="21,22,5432,3306,25,88,389,445,636,1443,6379,27017,9200,1521"
+export common_ports
 
 ansi_filter() {
   sed 's/\x1B\[[0-9;]*[mK]//g'
