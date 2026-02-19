@@ -1,4 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+ua_header="User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36"
+color_green="\e[32m"
+color_yellow="\e[33m"
+color_normal="\e[0m"
 
 ansi_filter() {
   sed 's/\x1B\[[0-9;]*[mK]//g'
@@ -17,5 +22,12 @@ ipinfo() {
 }
 
 method_bypass() {
-  xargs -P 5 -I {} curl-impersonate-chrome {} -X OPTIONS -H "X-Http-Method-Override: GET" --proxy "http://127.0.0.1:8080" -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36" -k
+  code=$(curl-impersonate-chrome -s -o /dev/null -X OPTIONS -H "X-Http-Method-Override: GET" -H "$ua_header" -w "%{http_code}" "$1")
+  echo -e "[+] URL: $1 [~] status_code: $color_yellow$code$color_normal"
+}
+
+cors_null_check() {
+  [ "$#" -eq 0 ] && { echo "Usage: cors_null_check <url>"; return 1; }
+  echo "[+] URL: $1"
+  curl-impersonate-chrome $1 -H "Origin: null" -H "$ua_header -I" -s | grep -iE "Access-Control-Allow-Origin: null|Access-Control-Allow-Credentials: true"
 }
