@@ -31,3 +31,13 @@ cors_null_check() {
   echo "[+] URL: $1"
   curl-impersonate-chrome $1 -H "Origin: null" -H "$ua_header -I" -s | grep -iE "Access-Control-Allow-Origin: null|Access-Control-Allow-Credentials: true"
 }
+
+google_firebase_apikey_checker() {
+  [ "$#" -eq 0 ] && { echo "Usage: google_firebase_apikey_checker <ip_addr>"; return 1; }
+  local api_key="$1"
+  local data='{"longDynamicLink": "https://sub.example.com/?link=https://example.org"}'
+  response=$(curl -s -X POST "https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=$api_key" -H 'Content-Type: application/json' -d "$data")
+  [[ $response != *"API key not valid"* ]] && { echo "$api_key; return 0"; }
+}
+
+
