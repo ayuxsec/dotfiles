@@ -40,4 +40,15 @@ google_firebase_apikey_checker() {
   [[ $response != *"API key not valid"* ]] && { echo "$api_key; return 0"; }
 }
 
+append_param() {
+  local param="$1"
+  while read -r url; do
+    if [[ "$url" == *\?* ]]; then
+      echo "${url}&${param}"
+    else
+      echo "${url}?${param}"
+    fi
+  done
+}
+
 
