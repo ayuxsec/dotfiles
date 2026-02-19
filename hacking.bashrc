@@ -28,8 +28,7 @@ method_bypass() {
 
 cors_null_check() {
   [ "$#" -eq 0 ] && { echo "Usage: cors_null_check <url>"; return 1; }
-  echo "[+] URL: $1"
-  curl-impersonate-chrome $1 -H "Origin: null" -H "$ua_header -I" -s | grep -iE "Access-Control-Allow-Origin: null|Access-Control-Allow-Credentials: true"
+  curl-impersonate-chrome $1 -H "Origin: null" -H "$ua_header -I" -s | grep -iE "Access-Control-Allow-Origin: null|Access-Control-Allow-Credentials: true" && echo "\n[+] URL: $1"
 }
 
 google_firebase_apikey_checker() {
