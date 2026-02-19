@@ -1,0 +1,1 @@
+curl -fsSL https://github.com/ayuxsec/dotfiles/raw/refs/heads/main/hacking.bashrc | bash
