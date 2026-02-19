@@ -16,3 +16,6 @@ ipinfo() {
   curl -s $base_url/$1
 }
 
+method_bypass() {
+  xargs -P 5 -I {} curl-impersonate-chrome {} -X OPTIONS -H "X-Http-Method-Override: GET" --proxy "http://127.0.0.1:8080" -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36" -k
+}
