@@ -33,7 +33,7 @@ cors_null_check() {
 }
 
 google_firebase_apikey_checker() {
-  [ "$#" -eq 0 ] && { echo "Usage: google_firebase_apikey_checker <ip_addr>"; return 1; }
+  [ "$#" -eq 0 ] && { echo "Usage: google_firebase_apikey_checker <key>"; return 1; }
   local api_key="$1"
   local data='{"longDynamicLink": "https://sub.example.com/?link=https://example.org"}'
   response=$(curl -s -X POST "https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=$api_key" -H 'Content-Type: application/json' -d "$data")
